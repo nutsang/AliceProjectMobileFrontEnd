@@ -14,7 +14,6 @@ export const signUpAccount = (account, success, unsuccess) => {
             userName: account.userName,
             email: user.email
         }
-        console.log(process.env.EXPO_PUBLIC_API)
         axios.post(`${process.env.EXPO_PUBLIC_API}/sign-up`, user_account)
         .then((response) => {
             success(response.data.message)
@@ -41,7 +40,6 @@ export const signInAccount = (account, success, unsuccess) => {
         axios.post(`${process.env.EXPO_PUBLIC_API}/sign-in`, {email: userCredential.user.email})
         .then((response) => {
             AsyncStorage.setItem('token', response.data.token)
-            
             success('เข้าสู่ระบบสำเร็จ')
         })
         .catch((error) => {

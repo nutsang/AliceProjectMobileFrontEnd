@@ -1,12 +1,17 @@
-import { useState } from 'react'
 import { View, ImageBackground, Image } from 'react-native'
 import { Button, TextInput, useTheme, Text } from 'react-native-paper'
 import Constants from 'expo-constants'
 import axios from 'axios';
 import { ALERT_TYPE, Dialog, AlertNotificationRoot } from 'react-native-alert-notification'
 import { signUpAccount } from '../../service/authentication'
+import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 const SignUp = ({ navigation, route }) => {
+    const isLogin = useSelector((state) => state.isLogin.isLogin)
+    useEffect(()=>{
+        isLogin && navigation.navigate('Home')
+      }, [isLogin, navigation])
     const theme = useTheme()
     const [hidden1, setHidden1] = useState(true)
     const [hidden2, setHidden2] = useState(true)
@@ -132,13 +137,13 @@ const SignUp = ({ navigation, route }) => {
                 key={1}
                 source={require('../../assets/ALICE_2_1.png')}
                 style={{
-                    flex: 1,
+                    flex: 0.3,
                     alignSelf: 'center',
                     resizeMode: 'contain',
                     backgroundColor: theme.colors.background,
                 }}
                 />
-                <View style={{flex:2, marginHorizontal: 20, width: '90%', backgroundColor: theme.colors.background}}>
+                <View style={{flex:0.7, marginHorizontal: 20, width: '90%', backgroundColor: theme.colors.background}}>
                     <TextInput label={'นามแฝง'} style={{marginBottom: 10}} value={account.userName} onChangeText={(text) => setUserName(text)}/>
                     <TextInput label={'อีเมล'} style={{marginBottom: 10}} value={account.email} onChangeText={(text) => setEmail(text)}/>
                     <TextInput
@@ -165,12 +170,12 @@ const SignUp = ({ navigation, route }) => {
                         value={account.confirmPassword}
                         onChangeText={(text) => setConfirmPassword(text)}
                     />
-                    <Text variant='bodyLarge'>ความต้องการของรหัสผ่าน:</Text>
-                    <Text variant='bodyLarge' style={passwordRequireMent.minimumLength ? {color: theme.colors.success} : {color: theme.colors.error}}>* ความยาวรหัสผ่านอย่างน้อย 8 ตัว</Text>
-                    <Text variant='bodyLarge' style={passwordRequireMent.alphabetLower ? {color: theme.colors.success} : {color: theme.colors.error}}>* มีตัวอักษรพิมพ์เล็กอย่างน้อย 1 ตัว</Text>
-                    <Text variant='bodyLarge' style={passwordRequireMent.alphabetUpper ? {color: theme.colors.success} : {color: theme.colors.error}}>* มีตัวอักษรพิมพ์ใหญ่อย่างน้อย 1 ตัว</Text>
-                    <Text variant='bodyLarge' style={passwordRequireMent.number ? {color: theme.colors.success} : {color: theme.colors.error}}>* มีตัวเลขอย่างน้อย 1 ตัว</Text>
-                    <Text variant='bodyLarge' style={passwordRequireMent.special ? {color: theme.colors.success} : {color: theme.colors.error}}>* มีเครื่องหมายพิเศษ เช่น #?!@$%^&*- อย่างน้อย 1 ตัว</Text>
+                    <Text variant='labelLarge'>ความต้องการของรหัสผ่าน:</Text>
+                    <Text variant='labelLarge' style={passwordRequireMent.minimumLength ? {color: theme.colors.success} : {color: theme.colors.error}}>* ความยาวรหัสผ่านอย่างน้อย 8 ตัว</Text>
+                    <Text variant='labelLarge' style={passwordRequireMent.alphabetLower ? {color: theme.colors.success} : {color: theme.colors.error}}>* มีตัวอักษรพิมพ์เล็กอย่างน้อย 1 ตัว</Text>
+                    <Text variant='labelLarge' style={passwordRequireMent.alphabetUpper ? {color: theme.colors.success} : {color: theme.colors.error}}>* มีตัวอักษรพิมพ์ใหญ่อย่างน้อย 1 ตัว</Text>
+                    <Text variant='labelLarge' style={passwordRequireMent.number ? {color: theme.colors.success} : {color: theme.colors.error}}>* มีตัวเลขอย่างน้อย 1 ตัว</Text>
+                    <Text variant='labelLarge' style={passwordRequireMent.special ? {color: theme.colors.success} : {color: theme.colors.error}}>* มีเครื่องหมายพิเศษ เช่น #?!@$%^&*- อย่างน้อย 1 ตัว</Text>
                     <Button mode='contained' onPress={createAccount} style={{marginBottom: 10}}>
                         สร้างบัญชี
                     </Button>

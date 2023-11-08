@@ -1,9 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import SignIn from '../../screens/sign-in/SignIn'
 import SignUp from '../../screens/sign-up/SignUp'
-import Home from '../../screens/home/Home'
 import ForgotPassword from '../../screens/forgot-password/ForgotPassword'
 import Media from '../../screens/media/Media'
+import Home from '../../screens/home/Home'
 const Stack = createStackNavigator()
 
 const StackNavigator = () => {

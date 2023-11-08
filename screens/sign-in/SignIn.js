@@ -1,16 +1,23 @@
-import { useState } from 'react'
 import { View, ImageBackground, Image } from 'react-native'
 import { Button, TextInput, useTheme } from 'react-native-paper'
 import Constants from 'expo-constants'
 import { signInAccount } from '../../service/authentication'
 import { ALERT_TYPE, Dialog, AlertNotificationRoot } from 'react-native-alert-notification'
+import { useDispatch } from 'react-redux'
+import { setIsLogin } from '../../redux/isLoginSlice'
+import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 const SignIn = ({ navigation }) => {
     const theme = useTheme()
     const [hidden, setHidden] = useState(true)
     const [account ,setAccount] = useState({email:'', password:''})
+    const dispatch = useDispatch()
     const blurhash = '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
-
+    const isLogin = useSelector((state) => state.isLogin.isLogin)
+    useEffect(()=>{
+        isLogin && navigation.navigate('Home')
+      }, [isLogin, navigation])
     const success = (message) => {
         Dialog.show({
             type: ALERT_TYPE.SUCCESS,
@@ -18,6 +25,7 @@ const SignIn = ({ navigation }) => {
             textBody: message,
             button: 'ตกลง',
             onHide: () => {
+                dispatch(setIsLogin(true))
                 setAccount({email:'', password:''})
                 navigation.push('Home')
             },
