@@ -10,7 +10,7 @@ const MediaCard = ({media, media_id, mediaPreference, setMediaPreference, naviga
         <Avatar.Icon {...props} icon="text-to-speech"  size={38}/>
     </TouchableOpacity>
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('Media', {
+        <TouchableOpacity style={{marginTop: 20}} onPress={() => navigation.navigate('Media', {
             id: media[media_id].id,
             linked_to: media[media_id].linked_to
         })}>

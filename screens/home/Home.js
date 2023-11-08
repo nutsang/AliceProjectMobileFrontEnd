@@ -60,7 +60,7 @@ const Home = ({ navigation }) => {
         <AlertNotificationRoot>
           <View style={{marginTop: Constants.statusBarHeight, padding: 20}}>
           <Searchbar
-            placeholder="Search"
+            placeholder="ค้นหาชื่อเรื่อง..."
             onChangeText={onChangeSearch}
             value={searchQuery}
           />
@@ -68,13 +68,13 @@ const Home = ({ navigation }) => {
             (((filterResult.length > 0) && !errorOnce) && isLogin) ?
               <FlatList
               data={filterResult}
-              renderItem={({index}) => <MediaCard key={filterResult.id} media_id={index} media={filterResult} mediaPreference={mediaPreference} setMediaPreference={setMediaPreference} navigation={navigation}/>}
+              renderItem={({item, index}) => <MediaCard key={item.id} media_id={index} media={filterResult} mediaPreference={mediaPreference} setMediaPreference={setMediaPreference} navigation={navigation}/>}
               keyExtractor={(item) => item.id}
               />
             :
             <FlatList
             data={filterResult}
-            renderItem={({index}) => <MediaCard key={filterResult.id} media_id={index} media={filterResult} navigation={navigation}/>}
+            renderItem={({item, index}) => <MediaCard key={item.id} media_id={index} media={filterResult} navigation={navigation}/>}
             keyExtractor={(item) => item.id}
             />
           }
