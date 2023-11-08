@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { useTheme, Button, Text } from 'react-native-paper';
 import BottomNavigator from '../../components/navigation/BottomNavigator'
+import { Rating } from 'react-native-ratings';
 
 const Media = ({ navigation, route }) => {
     const { id, linked_to } = route.params
@@ -21,6 +22,8 @@ const Media = ({ navigation, route }) => {
     const [episodeCurrent, setEpisodeCurrent] = useState(1)
     const isLogin = useSelector((state) => state.isLogin.isLogin)
     const blurhash = '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
+    const [rating, setRating] = useState(0)
+    const [popularityRating, setPopularityRating] = useState(information.popularity)
 
     const fetchMedia = async() => {
         axios.get(`${process.env.EXPO_PUBLIC_API}/media/${id}/${linked_to}`)
@@ -54,6 +57,31 @@ const Media = ({ navigation, route }) => {
             setEpisodeCurrent(episode)
         }}>{`ตอนที่ ${episode}`}</Button>)
         }
+
+
+    
+    const updateRating = async() => {
+      const token = await AsyncStorage.getItem('token')
+      axios.post(`${process.env.EXPO_PUBLIC_API}/popularity/${id}`, {point: rating}, {headers: {
+        'Authorization': `Bearer ${token}`
+      }})
+      .then((response) => {})
+      .catch((error) => {})
+      setPopularityRating(popularityRating - rating + selectedRating)
+    }
+    useEffect(() => {
+      updateRating()
+    }, [rating])
+      const ratingChange = (selectedRating) => {
+          if(isLogin){
+            console.log('Nut')
+            setRating(selectedRating)
+            /*
+
+            setRating(selectedRating)
+            */
+        }
+      }
       return (
         <ImageBackground
         source={require('../../assets/magicpattern-confetti-1699399527418.png')}
@@ -73,6 +101,7 @@ const Media = ({ navigation, route }) => {
             isLooping
             onPlaybackStatusUpdate={status => setStatus(() => status)}
         />
+        {isLogin && <Rating showRating startingValue={rating} minValue={0} fractions={0} ratingCount={5} jumpValue={1} onFinishRating={(rating) => ratingChange(rating)}/>}
         <View style={{flex: 0.5}}>
         <Text variant='titleLarge' style={{marginBottom: 10, textAlign:'center', backgroundColor:theme.colors.primary, color:theme.colors.background, padding: 10}}>เลือกตอนที่นี่</Text>
           <FlatList

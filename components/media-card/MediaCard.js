@@ -18,7 +18,7 @@ const MediaCard = ({media, media_id, mediaPreference, setMediaPreference, naviga
         <Card.Title
             title={media[media_id].title}
             subtitle={`มี ${media[media_id].episode_amount} ตอน ${media[media_id].subtitle !== 'ไม่มี' ? `ซับ${media[media_id].subtitle}` : ''} ${media[media_id].dubbed !== 'ไม่มี' ? `พากย์${media[media_id].dubbed}` : ''}`}
-            left={isLogin ? !mediaPreference.includes(media[media_id].id) && LeftContent : media[media_id] && LeftContent}
+            left={isLogin && !mediaPreference.includes(media[media_id].id) && LeftContent}
             right={RightContent}
         />
         <Card.Cover source={{ uri: `https://drive.google.com/uc?id=${media[media_id].cover_photo}` }} />
