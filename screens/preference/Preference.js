@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { ALERT_TYPE, Dialog, AlertNotificationRoot } from 'react-native-alert-notification'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import MediaCard from '../../components/media-card/MediaCard'
+import PreferenceCard from '../../components/preference-card/PreferenceCard'
 import Constants from 'expo-constants'
 import { Searchbar, useTheme } from 'react-native-paper';
 import BottomNavigator from '../../components/navigation/BottomNavigator'
@@ -73,7 +73,7 @@ const Preference = ({ navigation }) => {
             filterResult.length > 0 && !errorOnce && 
               <FlatList
               data={filterResult}
-              renderItem={({item, index}) => <MediaCard key={item.id} media_id={index} media={filterResult} mediaPreference={mediaPreference} setMediaPreference={setMediaPreference} navigation={navigation}/>}
+              renderItem={({item, index}) => <PreferenceCard key={item.id} media_id={index} media={filterResult} mediaPreference={mediaPreference} setMediaPreference={setMediaPreference} navigation={navigation}/>}
               keyExtractor={(item) => item.id}
               />
           }

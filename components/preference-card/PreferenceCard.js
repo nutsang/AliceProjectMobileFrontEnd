@@ -6,12 +6,13 @@ import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ALERT_TYPE, Dialog as DialogAlert, AlertNotificationRoot } from 'react-native-alert-notification'
 import axios from 'axios'
-const MediaCard = ({media, media_id, mediaPreference, setMediaPreference, navigation}) => {
+
+const PreferenceCard = ({media, media_id, mediaPreference, setMediaPreference, navigation}) => {
     const [visible, setVisible] = useState(false)
     const hideDialog = () => setVisible(false);
 
     const isLogin = useSelector((state) => state.isLogin.isLogin)
-    const LeftContent = props => <TouchableOpacity onPress={() => setVisible(true)}><Avatar.Icon {...props} icon="heart" size={38}/></TouchableOpacity>
+    const LeftContent = props => <TouchableOpacity onPress={() => setVisible(true)}><Avatar.Icon {...props} icon="delete" size={38}/></TouchableOpacity>
     const RightContent = props => <TouchableOpacity onPress={() => Speech.speak(media[media_id].title)}>
         <Avatar.Icon {...props} icon="text-to-speech"  size={38}/>
     </TouchableOpacity>
@@ -24,7 +25,7 @@ const MediaCard = ({media, media_id, mediaPreference, setMediaPreference, naviga
             button: 'ตกลง',
             onHide: () => {
                 hideDialog()
-                navigation.push('Preference')
+                navigation.push('Home')
             },
         })
     }
@@ -38,18 +39,20 @@ const MediaCard = ({media, media_id, mediaPreference, setMediaPreference, naviga
         })
     }
 
-    const addPreference = async () => {
+    const deletePreference = async () => {
         const token = await AsyncStorage.getItem('token')
-        axios.post(`${process.env.EXPO_PUBLIC_API}/preference`, {id:media[media_id].id}, {headers: {
+        axios.delete(`${process.env.EXPO_PUBLIC_API}/preference`, {
+            data: {id:media[media_id].id},
+            headers: {
             'Authorization': `Bearer ${token}`
           }})
-          .then((response) => {
-            setMediaPreference([...mediaPreference, media_id])
+        .then((response) => {
+            setMediaPreference(mediaPreference.filter(item => item.id !== media[media_id].id))
             success(response.data.message)
-          })
-          .catch((error) => {
-            unsuccess(error.response.message)
-          })
+        })
+        .catch((error) => {
+            unsuccess(error.response)
+        })
     }
     return (
         <AlertNotificationRoot>
@@ -69,9 +72,9 @@ const MediaCard = ({media, media_id, mediaPreference, setMediaPreference, naviga
       <Portal>
       <Dialog visible={visible} onDismiss={hideDialog}>
         <Dialog.Icon icon="alert" />
-        <Dialog.Title style={{textAlign: 'center'}}>ยืนยันการเพิ่มรายการโปรด</Dialog.Title>
+        <Dialog.Title style={{textAlign: 'center'}}>ยืนยันการลบรายการโปรด</Dialog.Title>
         <Dialog.Actions>
-          <Button onPress={addPreference}>เพิ่มเข้ารายการโปรด</Button>
+          <Button onPress={deletePreference}>ยืนยัน</Button>
           <Button onPress={hideDialog}>ยกเลิก</Button>
         </Dialog.Actions>
       </Dialog>
@@ -81,4 +84,4 @@ const MediaCard = ({media, media_id, mediaPreference, setMediaPreference, naviga
     )
 }
 
-export default MediaCard
+export default PreferenceCard
