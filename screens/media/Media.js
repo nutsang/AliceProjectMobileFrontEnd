@@ -53,7 +53,6 @@ const Media = ({ navigation, route }) => {
             setEpisodeCurrent(episode)
         }}>{`ตอนที่ ${episode}`}</Button>)
         }
-        console.log(information)
       return (
         <ImageBackground
         source={require('../../assets/magicpattern-confetti-1699399527418.png')}
