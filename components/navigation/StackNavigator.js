@@ -4,6 +4,8 @@ import SignUp from '../../screens/sign-up/SignUp'
 import ForgotPassword from '../../screens/forgot-password/ForgotPassword'
 import Media from '../../screens/media/Media'
 import Home from '../../screens/home/Home'
+import EditAccount from '../../screens/edit-account/EditAccount'
+
 const Stack = createStackNavigator()
 
 const StackNavigator = () => {
@@ -73,6 +75,17 @@ const StackNavigator = () => {
                   close: config,
                 },
                 title: 'เลือกตอน'
+              }}
+            />
+            <Stack.Screen
+            name='EditAccount'
+            component={EditAccount}
+            options={{
+                transitionSpec: {
+                  open: config,
+                  close: config,
+                },
+                title: 'แก้ไขบัญชี'
               }}
             />
         </Stack.Navigator>

@@ -24,7 +24,10 @@ const BottomNavigator = () => {
               label: 'รายการโปรด',
               onPress: () => console.log('Preference')
             },
-            { value: 'Account', label: 'บัญชีของฉัน', onPress: () => console.log('Account')},
+            {
+            value: 'Account',
+            label: 'บัญชีของฉัน',
+            onPress: () => navigation.push('EditAccount')},
           ] :
           [
             {

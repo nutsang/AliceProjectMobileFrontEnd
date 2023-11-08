@@ -3,10 +3,9 @@ import { Button, TextInput, useTheme } from 'react-native-paper'
 import Constants from 'expo-constants'
 import { signInAccount } from '../../service/authentication'
 import { ALERT_TYPE, Dialog, AlertNotificationRoot } from 'react-native-alert-notification'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setIsLogin } from '../../redux/isLoginSlice'
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
 
 const SignIn = ({ navigation }) => {
     const theme = useTheme()
