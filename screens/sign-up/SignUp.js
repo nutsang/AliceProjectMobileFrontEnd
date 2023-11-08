@@ -177,10 +177,10 @@ const SignUp = ({ navigation, route }) => {
                     <Text variant='labelLarge' style={passwordRequireMent.alphabetUpper ? {color: theme.colors.success} : {color: theme.colors.error}}>* มีตัวอักษรพิมพ์ใหญ่อย่างน้อย 1 ตัว</Text>
                     <Text variant='labelLarge' style={passwordRequireMent.number ? {color: theme.colors.success} : {color: theme.colors.error}}>* มีตัวเลขอย่างน้อย 1 ตัว</Text>
                     <Text variant='labelLarge' style={passwordRequireMent.special ? {color: theme.colors.success} : {color: theme.colors.error}}>* มีเครื่องหมายพิเศษ เช่น #?!@$%^&*- อย่างน้อย 1 ตัว</Text>
+                    <Button mode='contained' onPress={createAccount} style={{marginBottom: 10}}>สร้างบัญชี</Button>
+                    <Button mode='contained' buttonColor={theme.colors.createAccount} onPress={() => navigation.push('SignIn')} style={{marginBottom: 10}}>ไปหน้าเข้าสู่ระบบ</Button>
                     </View>
                 </View>
-                <Button mode='contained' onPress={createAccount} style={{marginBottom: 10}}>สร้างบัญชี</Button>
-                <Button mode='contained' buttonColor={theme.colors.createAccount} onPress={() => navigation.push('SignIn')} style={{marginBottom: 10}}>ไปหน้าเข้าสู่ระบบ</Button>
                 </ImageBackground>
             </View>
         </AlertNotificationRoot>
