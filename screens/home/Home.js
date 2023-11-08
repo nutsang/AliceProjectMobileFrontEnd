@@ -6,18 +6,29 @@ import { ALERT_TYPE, Dialog, AlertNotificationRoot } from 'react-native-alert-no
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import MediaCard from '../../components/media-card/MediaCard'
 import Constants from 'expo-constants'
+import { Searchbar } from 'react-native-paper';
 
-const Home = () => {
-    
+const Home = ({ navigation }) => {
+  const [searchQuery, setSearchQuery] = useState('')
     const [media, setMedia] = useState([])
     const [mediaPreference, setMediaPreference] = useState([])
+    const [filterResult, setFilterResult] = useState([])
     const [errorOnce, setErrorOnce] = useState(false)
     const isLogin = useSelector((state) => state.isLogin.isLogin)
+    const onChangeSearch = (query) => {
+      setSearchQuery(query)
+      if(query.length <= 0){
+        setFilterResult(media)
+      }else{
+        setFilterResult(media.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase())))
+      }
+    }
     const fetchMedia = async () => {
       if(media.length <= 0){
         axios.get(`${process.env.EXPO_PUBLIC_API}/`)
         .then((response) => {
           setMedia(response.data)
+          setFilterResult(response.data)
         })
         .catch((error) => {
           if(!errorOnce){
@@ -47,18 +58,23 @@ const Home = () => {
       }, [isLogin, errorOnce, media.length])
     return (
         <AlertNotificationRoot>
-          <View style={{marginTop: Constants.statusBarHeight}}>
+          <View style={{marginTop: Constants.statusBarHeight, padding: 20}}>
+          <Searchbar
+            placeholder="Search"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+          />
           {
-            (((media.length > 0) && !errorOnce) && isLogin) ?
+            (((filterResult.length > 0) && !errorOnce) && isLogin) ?
               <FlatList
-              data={media}
-              renderItem={({index}) => <MediaCard key={media.id} media_id={index} media={media} mediaPreference={mediaPreference} setMediaPreference={setMediaPreference} />}
+              data={filterResult}
+              renderItem={({index}) => <MediaCard key={filterResult.id} media_id={index} media={filterResult} mediaPreference={mediaPreference} setMediaPreference={setMediaPreference} navigation={navigation}/>}
               keyExtractor={(item) => item.id}
               />
             :
             <FlatList
-            data={media}
-            renderItem={({index}) => <MediaCard key={media.id} media_id={index} media={media} />}
+            data={filterResult}
+            renderItem={({index}) => <MediaCard key={filterResult.id} media_id={index} media={filterResult} navigation={navigation}/>}
             keyExtractor={(item) => item.id}
             />
           }

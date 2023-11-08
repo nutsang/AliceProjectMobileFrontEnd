@@ -5,7 +5,7 @@ import Constants from 'expo-constants'
 import { signInAccount } from '../../service/authentication'
 import { ALERT_TYPE, Dialog, AlertNotificationRoot } from 'react-native-alert-notification'
 
-const SignIn = ({ navigation, route }) => {
+const SignIn = ({ navigation }) => {
     const theme = useTheme()
     const [hidden, setHidden] = useState(true)
     const [account ,setAccount] = useState({email:'', password:''})

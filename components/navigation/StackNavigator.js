@@ -3,6 +3,7 @@ import SignIn from '../../screens/sign-in/SignIn'
 import SignUp from '../../screens/sign-up/SignUp'
 import Home from '../../screens/home/Home'
 import ForgotPassword from '../../screens/forgot-password/ForgotPassword'
+import Media from '../../screens/media/Media'
 const Stack = createStackNavigator()
 
 const StackNavigator = () => {
@@ -52,6 +53,16 @@ const StackNavigator = () => {
             <Stack.Screen
             name='ForgotPassword'
             component={ForgotPassword}
+            options={{
+                transitionSpec: {
+                  open: config,
+                  close: config,
+                },
+              }}
+            />
+            <Stack.Screen
+            name='Media'
+            component={Media}
             options={{
                 transitionSpec: {
                   open: config,
