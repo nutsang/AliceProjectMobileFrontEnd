@@ -22,12 +22,13 @@ const BottomNavigator = () => {
             {
               value: 'Preference',
               label: 'รายการโปรด',
-              onPress: () => console.log('Preference')
+              onPress: () => navigation.push('Preference')
             },
             {
             value: 'Account',
             label: 'บัญชีของฉัน',
-            onPress: () => navigation.push('EditAccount')},
+            onPress: () => navigation.push('EditAccount')
+            },
           ] :
           [
             {

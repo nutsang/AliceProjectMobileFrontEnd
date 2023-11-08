@@ -5,6 +5,7 @@ import ForgotPassword from '../../screens/forgot-password/ForgotPassword'
 import Media from '../../screens/media/Media'
 import Home from '../../screens/home/Home'
 import EditAccount from '../../screens/edit-account/EditAccount'
+import Preference from '../../screens/preference/Preference'
 
 const Stack = createStackNavigator()
 
@@ -86,6 +87,17 @@ const StackNavigator = () => {
                   close: config,
                 },
                 title: 'แก้ไขบัญชี'
+              }}
+            />
+            <Stack.Screen
+            name='Preference'
+            component={Preference}
+            options={{
+                transitionSpec: {
+                  open: config,
+                  close: config,
+                },
+                title: 'รายการโปรด'
               }}
             />
         </Stack.Navigator>
