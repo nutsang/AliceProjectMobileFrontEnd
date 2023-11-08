@@ -1,20 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { store } from './redux/store'
+import { Provider } from 'react-redux'
+import StackNavigator from './components/navigation/StackNavigator'
+import { PaperProvider, DefaultTheme } from 'react-native-paper'
 
-export default function App() {
+const App = () => {
+  const theme = {
+    ...DefaultTheme,
+    colors: {
+        ...DefaultTheme.colors,
+        primary: '#e11d48',
+        secondary: '#0f172a',
+        background: 'white',
+        surface: 'white',
+        surfaceVariant: 'white',
+        createAccount: '#4f46e5',
+        success: 'green',
+        error: 'red',
+    }
+}
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <PaperProvider theme={theme}>
+          <NavigationContainer>
+            <StackNavigator />
+          </NavigationContainer>
+        </PaperProvider>
+      </Provider>
+    </SafeAreaProvider>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
