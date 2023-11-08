@@ -62,7 +62,7 @@ const Preference = ({ navigation }) => {
                 placeholder={blurhash}
                 resizeMode='cover'
                 transition={1000}
-                style={{flex: 1, justifyContent: 'center', alignContent: 'center', marginTop: Constants.statusBarHeight}}>
+                style={{flex: 1, alignContent: 'center', marginTop: Constants.statusBarHeight}}>
           <Searchbar
             placeholder="ค้นหาชื่อเรื่อง..."
             onChangeText={onChangeSearch}
