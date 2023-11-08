@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { useTheme, Button, Text } from 'react-native-paper';
+import BottomNavigator from '../../components/navigation/BottomNavigator'
 
 const Media = ({ navigation, route }) => {
     const { id, linked_to } = route.params
@@ -80,6 +81,7 @@ const Media = ({ navigation, route }) => {
               keyExtractor={(item) => item.id}
             />
         </View>
+        <BottomNavigator/>
         </ImageBackground>
       )
 }

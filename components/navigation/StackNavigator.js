@@ -19,7 +19,7 @@ const StackNavigator = () => {
         },
       };
     return (
-        <Stack.Navigator screenOptions={{headerShown: true}} >
+        <Stack.Navigator screenOptions={{headerShown: false}} >
             <Stack.Screen
             name='SignIn'
             component={SignIn}

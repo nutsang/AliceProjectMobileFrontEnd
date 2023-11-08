@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import MediaCard from '../../components/media-card/MediaCard'
 import Constants from 'expo-constants'
 import { Searchbar, useTheme } from 'react-native-paper';
-
+import BottomNavigator from '../../components/navigation/BottomNavigator'
 const Home = ({ navigation }) => {
     const theme = useTheme()
     const [searchQuery, setSearchQuery] = useState('')
@@ -89,6 +89,7 @@ const Home = ({ navigation }) => {
           }
           </ImageBackground>
           </View>
+          <BottomNavigator/>
         </AlertNotificationRoot>
     )
 }
