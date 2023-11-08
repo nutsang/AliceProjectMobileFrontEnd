@@ -40,7 +40,6 @@ const Preference = ({ navigation }) => {
           setFilterResult(response.data)
         })
         .catch((error) => {
-            console.log('Eiei')
           if(errorOnce){
             Dialog.show({
                 type: ALERT_TYPE.DANGER,
