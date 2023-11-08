@@ -36,6 +36,7 @@ const Preference = ({ navigation }) => {
           'Authorization': `Bearer ${token}`
         }})
         .then((response) => {
+          console.log(response.data)
           setMedia(response.data)
           setFilterResult(response.data)
         })
