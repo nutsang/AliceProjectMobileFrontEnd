@@ -1,13 +1,15 @@
 import Constants from 'expo-constants'
-import { View, StyleSheet, Button, ImageBackground, Image, Text } from 'react-native'
+import { View, StyleSheet, FlatList, ImageBackground, Image } from 'react-native'
 import { Video, ResizeMode } from 'expo-av';
 import { useEffect, useState, useRef } from 'react'
 import { useSelector } from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
+import { useTheme, Button, Text } from 'react-native-paper';
 
 const Media = ({ navigation, route }) => {
     const { id, linked_to } = route.params
+    const theme = useTheme()
     const video = useRef(null)
     const [status, setStatus] = useState({})
     const [information, setInforamtion] = useState([])
@@ -15,7 +17,9 @@ const Media = ({ navigation, route }) => {
     const [mediaPreference, setMediaPreference] = useState([])
     const [jwp_id, setJWP_ID] = useState('')
     const [episodeStatus, setEpisodeStatus] = useState(false)
+    const [episodeCurrent, setEpisodeCurrent] = useState(1)
     const isLogin = useSelector((state) => state.isLogin.isLogin)
+    const blurhash = '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
     const fetchMedia = async() => {
         axios.get(`${process.env.EXPO_PUBLIC_API}/media/${id}/${linked_to}`)
@@ -43,11 +47,24 @@ const Media = ({ navigation, route }) => {
         fetchMedia();
       }, [id, isLogin, linked_to])
 
+      const EpisodeButton = ({episode, jwp_episode_id, jwp_id, setJWP_ID}) => {
+        return (<Button style={{marginTop: 5}} mode={"contained"} buttonColor={jwp_id === jwp_episode_id ? theme.colors.primary: theme.colors.secondary} onPress={()=>{
+            setJWP_ID(jwp_episode_id)
+            setEpisodeCurrent(episode)
+        }}>{`ตอนที่ ${episode}`}</Button>)
+        }
+        console.log(information)
       return (
-        <View style={styles.container}>
-          <Video
+        <ImageBackground
+        source={require('../../assets/magicpattern-confetti-1699399527418.png')}
+        placeholder={blurhash}
+        resizeMode='cover'
+        transition={1000}
+        style={{flex: 1, justifyContent: 'center', alignContent: 'center', marginTop: Constants.statusBarHeight}}>
+        <Text style={{backgroundColor:theme.colors.primary, color:theme.colors.background, padding: 10}} variant='titleMedium'>เรื่อง {information.title} ตอนที่ {episodeCurrent}</Text>
+        <Video
             ref={video}
-            style={styles.video}
+            style={{flex: 0.4 ,alignSelf: 'center', width:'100%', height: 200}}
             source={{
               uri: `https://cdn.jwplayer.com/manifests/${jwp_id}.m3u8`,
             }}
@@ -55,35 +72,25 @@ const Media = ({ navigation, route }) => {
             resizeMode={ResizeMode.CONTAIN}
             isLooping
             onPlaybackStatusUpdate={status => setStatus(() => status)}
-          />
-          <View style={styles.buttons}>
-            <Button
-              title={status.isPlaying ? 'Pause' : 'Play'}
-              onPress={() =>
-                status.isPlaying ? video.current.pauseAsync() : video.current.playAsync()
-              }
+        />
+        <View style={{flex: 0.5}}>
+        <Text variant='titleLarge' style={{marginBottom: 10, textAlign:'center', backgroundColor:theme.colors.primary, color:theme.colors.background, padding: 10}}>เลือกตอนที่นี่</Text>
+          <FlatList
+              data={episodeList}
+              renderItem={({item, index}) => <EpisodeButton key={item.id} episode={item.episode_at} jwp_episode_id={item.jwp_id} jwp_id={jwp_id} setJWP_ID={setJWP_ID}/>}
+              keyExtractor={(item) => item.id}
             />
-          </View>
         </View>
+        </ImageBackground>
       )
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      backgroundColor: '#ecf0f1',
-    },
     video: {
       alignSelf: 'center',
-      width: 320,
-      height: 200,
-    },
-    buttons: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
+      width: '100%',
+      height: '50%',
+    }
   });
 
 export default Media

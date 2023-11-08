@@ -1,20 +1,23 @@
 import axios from 'axios'
-import { View, FlatList } from 'react-native'
+import { View, FlatList, ImageBackground } from 'react-native'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { ALERT_TYPE, Dialog, AlertNotificationRoot } from 'react-native-alert-notification'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import MediaCard from '../../components/media-card/MediaCard'
 import Constants from 'expo-constants'
-import { Searchbar } from 'react-native-paper';
+import { Searchbar, useTheme } from 'react-native-paper';
 
 const Home = ({ navigation }) => {
-  const [searchQuery, setSearchQuery] = useState('')
+    const theme = useTheme()
+    const [searchQuery, setSearchQuery] = useState('')
     const [media, setMedia] = useState([])
     const [mediaPreference, setMediaPreference] = useState([])
     const [filterResult, setFilterResult] = useState([])
     const [errorOnce, setErrorOnce] = useState(false)
     const isLogin = useSelector((state) => state.isLogin.isLogin)
+    const blurhash = '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
+
     const onChangeSearch = (query) => {
       setSearchQuery(query)
       if(query.length <= 0){
@@ -58,7 +61,13 @@ const Home = ({ navigation }) => {
       }, [isLogin, errorOnce, media.length])
     return (
         <AlertNotificationRoot>
-          <View style={{marginTop: Constants.statusBarHeight, padding: 20}}>
+          <View style={{marginTop: Constants.statusBarHeight, padding: 20, flex: 1, backgroundColor: theme.colors.background}}>
+          <ImageBackground
+                source={require('../../assets/magicpattern-confetti-1699399527418.png')}
+                placeholder={blurhash}
+                resizeMode='cover'
+                transition={1000}
+                style={{flex: 1, justifyContent: 'center', alignContent: 'center', marginTop: Constants.statusBarHeight}}>
           <Searchbar
             placeholder="ค้นหาชื่อเรื่อง..."
             onChangeText={onChangeSearch}
@@ -78,6 +87,7 @@ const Home = ({ navigation }) => {
             keyExtractor={(item) => item.id}
             />
           }
+          </ImageBackground>
           </View>
         </AlertNotificationRoot>
     )

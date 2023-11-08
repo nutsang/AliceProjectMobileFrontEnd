@@ -28,6 +28,7 @@ const StackNavigator = () => {
                   open: config,
                   close: config,
                 },
+                title: 'เข้าสู่ระบบ'
               }}
             />
             <Stack.Screen
@@ -38,6 +39,7 @@ const StackNavigator = () => {
                   open: config,
                   close: config,
                 },
+                title: 'สมัครสมาชิก'
               }}
             />
             <Stack.Screen
@@ -48,6 +50,7 @@ const StackNavigator = () => {
                   open: config,
                   close: config,
                 },
+                title: 'ยอดนิยม'
               }}
             />
             <Stack.Screen
@@ -58,6 +61,7 @@ const StackNavigator = () => {
                   open: config,
                   close: config,
                 },
+                title: 'กู้คืนรหัสผ่าน'
               }}
             />
             <Stack.Screen
@@ -68,6 +72,7 @@ const StackNavigator = () => {
                   open: config,
                   close: config,
                 },
+                title: 'เลือกตอน'
               }}
             />
         </Stack.Navigator>
